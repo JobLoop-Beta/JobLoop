@@ -207,8 +207,6 @@ def post_linkedin(jobs):
         page.wait_for_timeout(3000)
         browser.close()
 
-# --- No Git operations needed as handled by GitHub Actions ---
-
 # --- MAIN ---
 if __name__ == "__main__":
     log("🚀 Starting Top Tech Jobs Automation...")
