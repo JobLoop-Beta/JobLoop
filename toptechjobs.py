@@ -207,31 +207,7 @@ def post_linkedin(jobs):
         page.wait_for_timeout(3000)
         browser.close()
 
-# --- GIT PUSH ---
-def git_push_changes():
-    """Push changes to GitHub Pages"""
-    try:
-        commands = [
-            ["git", "add", "index.html"],
-            ["git", "commit", "-m", f"Update jobs {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"],
-            ["git", "push", "origin", "main"]
-        ]
-        
-        for cmd in commands:
-            result = subprocess.run(
-                cmd,
-                cwd=REPO_PATH,
-                capture_output=True,
-                text=True
-            )
-            if result.returncode != 0:
-                raise Exception(f"Command {' '.join(cmd)} failed: {result.stderr}")
-            
-        log("🚀 Successfully pushed changes to GitHub!", "ok")
-        return True
-    except Exception as e:
-        log(f"❌ Failed to push to GitHub: {e}", "error")
-        return False
+# --- No Git operations needed as handled by GitHub Actions ---
 
 # --- MAIN ---
 if __name__ == "__main__":
@@ -240,13 +216,12 @@ if __name__ == "__main__":
         jobs = fetch_jobs()
         if jobs:
             make_html(jobs)
-            
-            # Push changes to GitHub Pages
-            if git_push_changes():
-                log("🌐 GitHub Pages will be updated in a few minutes", "ok")
-            
             img = make_image(jobs)
-            post_linkedin(jobs)
+            
+            # Only post to LinkedIn if running locally and session file exists
+            if os.path.exists(SESSION_FILE):
+                post_linkedin(jobs)
+                
             log("✅ Process completed successfully!", "ok")
         else:
             log("⚠️ No jobs found, skipping updates.", "warn")
