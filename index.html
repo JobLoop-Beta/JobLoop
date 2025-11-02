@@ -164,7 +164,7 @@
                     const counterElement = document.querySelector('.visitor-count');
                     const visitsElement = document.getElementById('visits');
                     
-                    // Method 1: Try CountAPI.xyz
+                    // Method 1: Try CountAPI.xyz with correct namespace
                     try {
                         console.log('Attempting CountAPI.xyz...');
                         const response = await fetch('https://api.countapi.xyz/hit/jobloop-beta-github-io/visits', {
@@ -187,7 +187,7 @@
                         console.log('CountAPI.xyz failed:', error);
                     }
                     
-                    // Method 2: Try alternative API
+                    // Method 2: Try alternative API - CounterAPI.dev
                     try {
                         console.log('Attempting alternative counter...');
                         const response = await fetch('https://api.counterapi.dev/v1/jobloop-beta-github-io/visits/up', {
@@ -209,7 +209,7 @@
                         console.log('Alternative API failed:', error);
                     }
                     
-                    // Method 3: Fallback to localStorage simulation
+                    // Method 3: Fallback to localStorage simulation (browser-only, not global)
                     try {
                         console.log('Using localStorage fallback...');
                         let count = parseInt(localStorage.getItem('visit_count') || '0');
@@ -251,184 +251,169 @@
                 <p>Advertisement Space</p>
             </div>
             <div class="job-grid">
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-0"
+                data-title="Freelance Data Engineer for Sora Union"
+                data-company="Sora Union"
+                data-location="None"
+                data-url="https://builtinlondon.uk/job/freelance-data-engineer-sora-union/7493402?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://builtinlondon.uk/job/freelance-data-engineer-sora-union/7493402?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Freelance Data Engineer for Sora Union</a>
+                <div class="job-company">Sora Union</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Location Flexible
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-1"
+                data-title="Data Engineer"
+                data-company="EP Wealth Advisors, LLC"
+                data-location="London"
+                data-url="https://jobiak.epwealth.com/careers/data-engineer-london-oh-690345e0c07db10a50c9dc56?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://jobiak.epwealth.com/careers/data-engineer-london-oh-690345e0c07db10a50c9dc56?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Data Engineer</a>
+                <div class="job-company">EP Wealth Advisors, LLC</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    London
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-2"
+                data-title="Data Engineering Consultant in Northampton"
+                data-company="Energy Jobline ZR"
+                data-location="Northampton"
+                data-url="https://www.ihireengineering.com/jobs/view/498473498?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://www.ihireengineering.com/jobs/view/498473498?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Data Engineering Consultant in Northampton</a>
+                <div class="job-company">Energy Jobline ZR</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Northampton
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-3"
+                data-title="15h Left! Senior Data Engineer( DWH)"
+                data-company="Mastercard"
+                data-location="Pune"
+                data-url="https://in.talent.com/view?id=9238cf80d12a&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://in.talent.com/view?id=9238cf80d12a&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">15h Left! Senior Data Engineer( DWH)</a>
+                <div class="job-company">Mastercard</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-4"
+                data-title="Azure Data Engineer(Databricks, Datafactory) Immediate joiners"
+                data-company="Tata Consultancy Services"
+                data-location="Pune"
+                data-url="https://in.linkedin.com/jobs/view/azure-data-engineer-databricks-datafactory-immediate-joiners-at-tata-consultancy-services-4319969713?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://in.linkedin.com/jobs/view/azure-data-engineer-databricks-datafactory-immediate-joiners-at-tata-consultancy-services-4319969713?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Azure Data Engineer(Databricks, Datafactory) Immediate joiners</a>
+                <div class="job-company">Tata Consultancy Services</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-5"
+                data-title="Senior Data Engineer - (On Premises - Hadoop, Spark, Python, SQL)"
+                data-company="Mastercard"
+                data-location="Pune"
+                data-url="https://careers.mastercard.com/us/en/job/R-263702/Senior-Data-Engineer-On-Premises-Hadoop-Spark-Python-SQL?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://careers.mastercard.com/us/en/job/R-263702/Senior-Data-Engineer-On-Premises-Hadoop-Spark-Python-SQL?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Senior Data Engineer - (On Premises - Hadoop, Spark, Python, SQL)</a>
+                <div class="job-company">Mastercard</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-6"
+                data-title="Data Engineer- Databricks"
+                data-company="InfoCepts"
+                data-location="Pune"
+                data-url="https://in.linkedin.com/jobs/view/data-engineer-databricks-at-infocepts-4332846441?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://in.linkedin.com/jobs/view/data-engineer-databricks-at-infocepts-4332846441?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Data Engineer- Databricks</a>
+                <div class="job-company">InfoCepts</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-7"
+                data-title="Senior Azure data engineer- immediate joiner [31 / 10 / 2025]"
+                data-company="Tata Consultancy Services"
+                data-location="Pune"
+                data-url="https://in.talent.com/view?id=483210314851&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://in.talent.com/view?id=483210314851&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Senior Azure data engineer- immediate joiner [31 / 10 / 2025]</a>
+                <div class="job-company">Tata Consultancy Services</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-8"
+                data-title="Senior Data Engineer- Databricks"
+                data-company="InfoCepts"
+                data-location="Pune"
+                data-url="https://in.linkedin.com/jobs/view/senior-data-engineer-databricks-at-infocepts-4332806967?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://in.linkedin.com/jobs/view/senior-data-engineer-databricks-at-infocepts-4332806967?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Senior Data Engineer- Databricks</a>
+                <div class="job-company">InfoCepts</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Pune
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-9"
+                data-title="Senior Data Scientist, Innovation Lab - Remote at Experian West Virginia"
+                data-company="Experian"
+                data-location="None"
+                data-url="https://lunaspraytech.com/jobs/job/senior-data-scientist-innovation-lab-remote-at-experian-west-virginia-VGlHTStyMFpvZDlxUTVJeUNhT3NUMzRueUE9PQ==?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://lunaspraytech.com/jobs/job/senior-data-scientist-innovation-lab-remote-at-experian-west-virginia-VGlHTStyMFpvZDlxUTVJeUNhT3NUMzRueUE9PQ==?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">Senior Data Scientist, Innovation Lab - Remote at Experian West Virginia</a>
+                <div class="job-company">Experian</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Location Flexible
                 </div>
             </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-10"
+                data-title="AI Product Analyst (Data Science) | New York, NY, USA | Remote"
+                data-company="S&P Global"
+                data-location="Morris Twp"
+                data-url="https://ai-search.io/job-board/sp-global-ai-product-analyst-data-science-new-york-ny-usa-remote-20250307?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic">
+                <a href="https://ai-search.io/job-board/sp-global-ai-product-analyst-data-science-new-york-ny-usa-remote-20250307?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic" class="job-title" target="_blank">AI Product Analyst (Data Science) | New York, NY, USA | Remote</a>
+                <div class="job-company">S&P Global</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
-                </div>
-            </article>
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
-                <div class="job-location">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    Morris Twp
                 </div>
             </article>
             </div>
@@ -439,7 +424,7 @@
         <footer>
             <p>Updated 02 Nov 2025</p>
             <div class="visitor-count" data-loading="true">
-                👁️ <span id="visits">...</span> visitors
+                <span id="visits">...</span> visitors
             </div>
             <p style="margin-top: 12px; font-size: 12px; opacity: 0.7;">
                 Tracking total page views.
