@@ -20,6 +20,20 @@ wheels/
 .installed.cfg
 *.egg
 
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Playwright
+**/node_modules/
+**/playwright-downloads/
+**/.playwright/
+**/playwright/driver/
+**/playwright/browsers/
+
 # Environment variables
 .env
 
