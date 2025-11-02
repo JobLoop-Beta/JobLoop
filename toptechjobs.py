@@ -9,7 +9,8 @@ TITLE = "Top Tech Jobs of the Week – India 🇮🇳"
 REPO_PATH = Path(__file__).parent
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 SESSION_FILE = "linkedin_session.json"
-BASE_URL = "https://jobloop-beta.github.io/JobLoop/"  # 👈 change if using Netlify/custom domain
+BASE_URL = "https://jobloop-beta.github.io/JobLoop/"
+COUNTER_NAMESPACE = "jobloop-beta-github-io"  # Consistent naming
 
 # --- UTILS ---
 def log(msg, level="info"):
@@ -23,7 +24,7 @@ def fetch_jobs():
         r = requests.get(
             "https://jsearch.p.rapidapi.com/search",
             headers={"x-rapidapi-key": API_KEY, "x-rapidapi-host": "jsearch.p.rapidapi.com"},
-            params={"query": "data engineer jobs in london", "num_pages": 1, "date_posted": "week"},
+            params={"query": "data scientist jobs in london", "num_pages": 1, "date_posted": "week"},
             timeout=15
         )
         r.raise_for_status()
@@ -62,7 +63,6 @@ def make_html(jobs):
                     for line in existing_content.split('<article class="job-card"')[1:]
                 ]
             except:
-                # Fallback for old format
                 pass
 
         # Combine new jobs with existing jobs (new jobs first)
@@ -168,16 +168,24 @@ def make_html(jobs):
                 text-align: center;
                 border: 1px solid var(--border-color);
             }}
+            footer {{
+                text-align: center;
+                padding: 24px;
+                color: var(--text-secondary);
+                font-size: 14px;
+                border-top: 1px solid var(--border-color);
+                background: white;
+            }}
             .visitor-count {{
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
                 background: var(--primary-color);
                 color: white;
-                padding: 4px 12px;
-                border-radius: 16px;
+                padding: 6px 16px;
+                border-radius: 20px;
                 font-size: 14px;
-                margin-top: 8px;
+                margin-top: 12px;
                 transition: opacity 0.3s ease;
             }}
             .visitor-count[data-loading="true"] {{
@@ -185,7 +193,7 @@ def make_html(jobs):
             }}
             #visits {{
                 font-weight: 600;
-                min-width: 20px;
+                min-width: 30px;
                 display: inline-block;
                 text-align: center;
             }}
@@ -222,42 +230,83 @@ def make_html(jobs):
                     }}
                 }}
                 
-                // Initialize visitor counter with debug logging
+                // Initialize visitor counter with multiple fallback options
                 const getVisitorCount = async () => {{
+                    const counterElement = document.querySelector('.visitor-count');
+                    const visitsElement = document.getElementById('visits');
+                    
+                    // Method 1: Try CountAPI.xyz
                     try {{
-                        console.log('Fetching visitor count...');
-                        const response = await fetch('https://api.countapi.xyz/hit/jobloop-beta-github-io/visits');
-                        console.log('Response received:', response);
-                        const data = await response.json();
-                        console.log('Visitor data:', data);
-                        const counterElement = document.querySelector('.visitor-count');
+                        console.log('Attempting CountAPI.xyz...');
+                        const response = await fetch('https://api.countapi.xyz/hit/{COUNTER_NAMESPACE}/visits', {{
+                            method: 'GET',
+                            cache: 'no-cache'
+                        }});
+                        
+                        if (response.ok) {{
+                            const data = await response.json();
+                            console.log('CountAPI.xyz success:', data);
+                            if (data.value !== undefined) {{
+                                counterElement.setAttribute('data-loading', 'false');
+                                visitsElement.textContent = data.value.toLocaleString();
+                                counterElement.classList.add('updated');
+                                setTimeout(() => counterElement.classList.remove('updated'), 500);
+                                return;
+                            }}
+                        }}
+                    }} catch (error) {{
+                        console.log('CountAPI.xyz failed:', error);
+                    }}
+                    
+                    // Method 2: Try alternative API
+                    try {{
+                        console.log('Attempting alternative counter...');
+                        const response = await fetch('https://api.counterapi.dev/v1/{COUNTER_NAMESPACE}/visits/up', {{
+                            method: 'GET'
+                        }});
+                        
+                        if (response.ok) {{
+                            const data = await response.json();
+                            console.log('Alternative API success:', data);
+                            if (data.count !== undefined) {{
+                                counterElement.setAttribute('data-loading', 'false');
+                                visitsElement.textContent = data.count.toLocaleString();
+                                counterElement.classList.add('updated');
+                                setTimeout(() => counterElement.classList.remove('updated'), 500);
+                                return;
+                            }}
+                        }}
+                    }} catch (error) {{
+                        console.log('Alternative API failed:', error);
+                    }}
+                    
+                    // Method 3: Fallback to localStorage simulation
+                    try {{
+                        console.log('Using localStorage fallback...');
+                        let count = parseInt(localStorage.getItem('visit_count') || '0');
+                        count++;
+                        localStorage.setItem('visit_count', count.toString());
                         counterElement.setAttribute('data-loading', 'false');
-                        document.getElementById('visits').textContent = data.value.toLocaleString();
+                        visitsElement.textContent = count.toLocaleString() + ' (local)';
                         counterElement.classList.add('updated');
                         setTimeout(() => counterElement.classList.remove('updated'), 500);
                     }} catch (error) {{
-                        console.error('Error fetching visitor count:', error);
-                        // Fallback to get request if hit fails
-                        try {{
-                            const response = await fetch('https://api.countapi.xyz/get/jobloop-beta-github-io/visits');
-                            const data = await response.json();
-                            if (!data.value) {{
-                                // Initialize the counter if it doesn't exist
-                                const createResponse = await fetch('https://api.countapi.xyz/create?namespace=jobloop-beta-github-io&key=visits&value=0');
-                                const createData = await createResponse.json();
-                                document.getElementById('visits').textContent = '0';
-                            }} else {{
-                                document.getElementById('visits').textContent = data.value.toLocaleString();
-                            }}
-                        }} catch (secondError) {{
-                            console.error('Fallback also failed:', secondError);
-                            document.getElementById('visits').textContent = 'Error';
-                        }}
+                        console.error('All methods failed:', error);
+                        visitsElement.textContent = 'Error';
+                        counterElement.setAttribute('data-loading', 'false');
                     }}
                 }};
-                // Call immediately and also after a short delay to ensure DOM is ready
+                
+                // Call immediately
                 getVisitorCount();
-                setTimeout(getVisitorCount, 1000);
+                
+                // Retry after a delay if needed
+                setTimeout(() => {{
+                    const visitsElement = document.getElementById('visits');
+                    if (visitsElement.textContent === '...') {{
+                        getVisitorCount();
+                    }}
+                }}, 2000);
             }}
         </script>
         </head>
@@ -266,9 +315,6 @@ def make_html(jobs):
             <div class="header-content">
                 <h1>Top Tech Jobs India</h1>
                 <p class="subtitle">Latest opportunities in technology</p>
-                <div class="visitor-count" data-loading="true">
-                    <span id="visits">...</span> visitors
-                </div>
             </div>
         </header>
         <main class="container">
@@ -279,32 +325,39 @@ def make_html(jobs):
 
         for i, j in enumerate(all_jobs):
             html += f"""
-            <article class="job-card" id="job-{i}"
-                data-title="{j['title']}"
-                data-company="{j['company']}"
-                data-location="{j['loc']}"
-                data-url="{j['url']}">
-                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
-                <div class="job-company">{j['company']}</div>
+            <article class="job-card" id="job-{{i}}"
+                data-title="{{j['title']}}"
+                data-company="{{j['company']}}"
+                data-location="{{j['loc']}}"
+                data-url="{{j['url']}}">
+                <a href="{{j['url']}}" class="job-title" target="_blank">{{j['title']}}</a>
+                <div class="job-company">{{j['company']}}</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {j['loc'] if j['loc'] else 'Location Flexible'}
+                    {{j['loc'] if j['loc'] else 'Location Flexible'}}
                 </div>
             </article>"""
 
-        html += """
+        html += f"""
             </div>
             <div class="ad-space">
                 <p>Advertisement Space</p>
             </div>
         </main>
-        <footer style="text-align: center; padding: 24px; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-color);">
-            <p>Updated {}</p>
+        <footer>
+            <p>Updated {datetime.datetime.now().strftime('%d %b %Y')}</p>
+            <div class="visitor-count" data-loading="true">
+                👁️ <span id="visits">...</span> visitors
+            </div>
+            <p style="margin-top: 12px; font-size: 12px; opacity: 0.7;">
+                Tracking total page views (including repeat visits)
+            </p>
         </footer>
-        </body></html>""".format(datetime.datetime.now().strftime('%d %b %Y'))
+        </body></html>"""
+        
         html_file.write_text(html)
         log("📄 HTML updated successfully!", "ok")
     except Exception as e:
@@ -351,7 +404,7 @@ def make_image(jobs):
 # --- LINKEDIN POST ---
 def post_single_job(job, index, page):
     """Helper function to create a single job post"""
-    job_link = f"https://jobloop-beta.github.io/JobLoop/#job-{index}"
+    job_link = f"{BASE_URL}#job-{index}"
     location = job['loc'] if job['loc'] else 'Location Flexible'
     
     text = f"""We're hiring at {job['company']}!
@@ -410,7 +463,7 @@ Share with someone who might be interested.
                 page.wait_for_selector(sel, timeout=10000)
                 page.locator(sel).first.click(timeout=5000)
                 log(f"✅ Posted job {index + 1}: {job['title']}", "ok")
-                page.wait_for_timeout(3000)  # Wait between posts
+                page.wait_for_timeout(3000)
                 return True
             except Exception:
                 continue
@@ -440,7 +493,7 @@ def post_linkedin(jobs):
         for i, job in enumerate(jobs):
             if post_single_job(job, i, page):
                 successful_posts += 1
-            page.wait_for_timeout(2000)  # Small delay between posts
+            page.wait_for_timeout(2000)
 
         log(f"🎉 Created {successful_posts} individual job posts!", "ok")
         page.wait_for_timeout(3000)
