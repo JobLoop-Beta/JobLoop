@@ -350,10 +350,10 @@ def make_html(jobs):
         <footer>
             <p>Updated {datetime.datetime.now().strftime('%d %b %Y')}</p>
             <div class="visitor-count" data-loading="true">
-                👁️ <span id="visits">...</span> visitors
+                <span id="visits">...</span> visitors
             </div>
             <p style="margin-top: 12px; font-size: 12px; opacity: 0.7;">
-                Tracking total page views (including repeat visits)
+                Tracking total page views.
             </p>
         </footer>
         </body></html>"""
