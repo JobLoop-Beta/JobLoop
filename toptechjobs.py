@@ -178,9 +178,24 @@ def make_html(jobs):
                 border-radius: 16px;
                 font-size: 14px;
                 margin-top: 8px;
+                transition: opacity 0.3s ease;
+            }}
+            .visitor-count[data-loading="true"] {{
+                opacity: 0.7;
             }}
             #visits {{
                 font-weight: 600;
+                min-width: 20px;
+                display: inline-block;
+                text-align: center;
+            }}
+            @keyframes pulse {{
+                0% {{ transform: scale(1); }}
+                50% {{ transform: scale(1.05); }}
+                100% {{ transform: scale(1); }}
+            }}
+            .visitor-count.updated {{
+                animation: pulse 0.3s ease;
             }}
             .highlight {{
                 background: #fff7a1 !important;
@@ -207,17 +222,42 @@ def make_html(jobs):
                     }}
                 }}
                 
-                // Initialize visitor counter
+                // Initialize visitor counter with debug logging
                 const getVisitorCount = async () => {{
                     try {{
-                        const response = await fetch('https://api.countapi.xyz/hit/jobloop-jobs/visits');
+                        console.log('Fetching visitor count...');
+                        const response = await fetch('https://api.countapi.xyz/hit/jobloop-beta-github-io/visits');
+                        console.log('Response received:', response);
                         const data = await response.json();
+                        console.log('Visitor data:', data);
+                        const counterElement = document.querySelector('.visitor-count');
+                        counterElement.setAttribute('data-loading', 'false');
                         document.getElementById('visits').textContent = data.value.toLocaleString();
+                        counterElement.classList.add('updated');
+                        setTimeout(() => counterElement.classList.remove('updated'), 500);
                     }} catch (error) {{
                         console.error('Error fetching visitor count:', error);
+                        // Fallback to get request if hit fails
+                        try {{
+                            const response = await fetch('https://api.countapi.xyz/get/jobloop-beta-github-io/visits');
+                            const data = await response.json();
+                            if (!data.value) {{
+                                // Initialize the counter if it doesn't exist
+                                const createResponse = await fetch('https://api.countapi.xyz/create?namespace=jobloop-beta-github-io&key=visits&value=0');
+                                const createData = await createResponse.json();
+                                document.getElementById('visits').textContent = '0';
+                            }} else {{
+                                document.getElementById('visits').textContent = data.value.toLocaleString();
+                            }}
+                        }} catch (secondError) {{
+                            console.error('Fallback also failed:', secondError);
+                            document.getElementById('visits').textContent = 'Error';
+                        }}
                     }}
                 }};
+                // Call immediately and also after a short delay to ensure DOM is ready
                 getVisitorCount();
+                setTimeout(getVisitorCount, 1000);
             }}
         </script>
         </head>
@@ -226,8 +266,8 @@ def make_html(jobs):
             <div class="header-content">
                 <h1>Top Tech Jobs India</h1>
                 <p class="subtitle">Latest opportunities in technology</p>
-                <div class="visitor-count">
-                    <span id="visits">0</span> visitors
+                <div class="visitor-count" data-loading="true">
+                    <span id="visits">...</span> visitors
                 </div>
             </div>
         </header>
