@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
 
 # --- CONFIG ---
-API_KEY = os.getenv("RAPIDAPI_KEY") or "841dbe29d5msh790ecbf1042fa50p14de78jsn602f79fdbc8c"
+API_KEY = os.getenv("RAPIDAPI_KEY") or ""
 TITLE = "Top Tech Jobs of the Week – India 🇮🇳"
 REPO_PATH = Path(__file__).parent
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -24,7 +24,7 @@ def fetch_jobs():
         r = requests.get(
             "https://jsearch.p.rapidapi.com/search",
             headers={"x-rapidapi-key": API_KEY, "x-rapidapi-host": "jsearch.p.rapidapi.com"},
-            params={"query": "data scientist jobs in london", "num_pages": 1, "date_posted": "week"},
+            params={"query": "data scientist jobs in banglore", "num_pages": 1, "date_posted": "week"},
             timeout=15
         )
         r.raise_for_status()
