@@ -325,19 +325,19 @@ def make_html(jobs):
 
         for i, j in enumerate(all_jobs):
             html += f"""
-            <article class="job-card" id="job-{{i}}"
-                data-title="{{j['title']}}"
-                data-company="{{j['company']}}"
-                data-location="{{j['loc']}}"
-                data-url="{{j['url']}}">
-                <a href="{{j['url']}}" class="job-title" target="_blank">{{j['title']}}</a>
-                <div class="job-company">{{j['company']}}</div>
+            <article class="job-card" id="job-{i}"
+                data-title="{j['title']}"
+                data-company="{j['company']}"
+                data-location="{j['loc']}"
+                data-url="{j['url']}">
+                <a href="{j['url']}" class="job-title" target="_blank">{j['title']}</a>
+                <div class="job-company">{j['company']}</div>
                 <div class="job-location">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {{j['loc'] if j['loc'] else 'Location Flexible'}}
+                    {j['loc'] if j['loc'] else 'Location Flexible'}
                 </div>
             </article>"""
 
@@ -350,7 +350,7 @@ def make_html(jobs):
         <footer>
             <p>Updated {datetime.datetime.now().strftime('%d %b %Y')}</p>
             <div class="visitor-count" data-loading="true">
-                <span id="visits">...</span> visitors
+                👁️ <span id="visits">...</span> visitors
             </div>
             <p style="margin-top: 12px; font-size: 12px; opacity: 0.7;">
                 Tracking total page views.
