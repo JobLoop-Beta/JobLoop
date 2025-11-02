@@ -1,71 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <title>Top Tech Jobs of the Week – India 🇮🇳</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-        }
-        .job {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            transition: all 0.5s;
-            min-height: 150px;
-        }
-        .highlight {
-            background: #fff7a1 !important;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            transform: scale(1.02);
-        }
-        .company-info {
-            margin-top: 10px;
-            color: #666;
-        }
-        .apply-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #0073b1;
-            color: white;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .apply-btn:hover {
-            background: #005582;
-            text-decoration: none;
-        }
-    </style>
-    <script>
-        window.onload = function() {
-            const hash = window.location.hash;
-            if (hash) {
-                const el = document.querySelector(hash);
-                if (el) {
-                    // Remove any existing highlights
-                    document.querySelectorAll('.highlight').forEach(e => e.classList.remove('highlight'));
-                    
-                    // Add highlight to target element
-                    el.classList.add('highlight');
-                    
-                    // Smooth scroll to element
-                    el.scrollIntoView({behavior: 'smooth', block: 'start'});
-                    
-                    // Keep highlight for 4 seconds
-                    setTimeout(() => el.classList.remove('highlight'), 4000);
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Top Tech Jobs of the Week – India 🇮🇳</title>
+        <style>
+            body{font-family:sans-serif;max-width:700px;margin:auto;padding:20px}
+            .job{border:1px solid #ddd;padding:10px;border-radius:8px;margin:10px 0;transition:background 0.5s}
+            .highlight{background: #fff7a1 !important;}
+            a{color:#0073b1;text-decoration:none}
+            a:hover{text-decoration:underline}
+        </style>
+        <script>
+            window.onload = function() {
+                const hash = window.location.hash;
+                if (hash) {
+                    const el = document.querySelector(hash);
+                    if (el) {
+                        el.classList.add('highlight');
+                        el.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        setTimeout(() => el.classList.remove('highlight'), 4000);
+                    }
                 }
             }
-        }
-    </script>
-</head>
-<body>
-    <h1>🚀 Top Tech Jobs of the Week – India 🇮🇳</h1>
-    <!-- Jobs will be inserted here by the Python script -->
-    <footer><hr>Updated {datetime}</footer>
-</body>
-</html>
+        </script>
+        </head><body>
+        <h1>🚀 Top Tech Jobs of the Week – India 🇮🇳</h1><div id='job-0' class='job'><a href='https://in.linkedin.com/jobs/view/data-scientist-python-genai-agenticai-at-wolters-kluwer-4319872554?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>Data Scientist (Python/ GenAI/ AgenticAI)</b></a><br>Wolters Kluwer – Pune</div><div id='job-1' class='job'><a href='https://careers.snowflake.com/us/en/job/SNCOUSE5563EEBE22F4F83ABADA6BD2B014860EXTERNALENUSF7C857F3DD284045B0C758E492307EC3/Data-Scientist?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>Data Scientist</b></a><br>Snowflake – Pune</div><div id='job-2' class='job'><a href='https://jobs.syngenta.com/job/data-scientist-people-data-analytics-and-insights-in-in-pune-jid-14917?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>Data Scientist  People Data Analytics & Insights</b></a><br>Syngenta – Pune</div><div id='job-3' class='job'><a href='https://in.talent.com/view?id=d99f903fffd8&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>(29 / 10 / 2025) Data Scientist</b></a><br>Tata Consultancy Services – Pune</div><div id='job-4' class='job'><a href='https://in.linkedin.com/jobs/view/python-data-scientist-ml-engineer-%E2%80%93-remote-hybrid-ai-ml-deep-learning-only-4%2B-years-of-experience-at-remotohire-4331723103?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>Python Data Scientist / ML Engineer – Remote/Hybrid | AI, ML, Deep Learning | Only 4+ Years of Experience</b></a><br>Remotohire – Pune</div><div id='job-5' class='job'><a href='https://careers.fisglobal.com/us/en/job/FIGLUSJR0296204EXTERNAL/Senior-Data-Scientist-Artificial-Intelligence-Machine-Learning?utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic' target='_blank'><b>Senior Data Scientist (Artificial Intelligence Machine Learning)</b></a><br>FIS Global – Pune</div><footer><hr>Updated 02 Nov 2025</footer></body></html>
