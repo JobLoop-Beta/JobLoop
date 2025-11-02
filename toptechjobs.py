@@ -23,7 +23,7 @@ def fetch_jobs():
         r = requests.get(
             "https://jsearch.p.rapidapi.com/search",
             headers={"x-rapidapi-key": API_KEY, "x-rapidapi-host": "jsearch.p.rapidapi.com"},
-            params={"query": "data scientist jobs in pune", "num_pages": 1, "date_posted": "week"},
+            params={"query": "data scientist jobs in london", "num_pages": 1, "date_posted": "week"},
             timeout=15
         )
         r.raise_for_status()
@@ -45,6 +45,26 @@ def fetch_jobs():
 # --- GENERATE HTML ---
 def make_html(jobs):
     try:
+        # Read existing jobs from index.html if it exists
+        existing_jobs = []
+        html_file = REPO_PATH / "index.html"
+        if html_file.exists():
+            existing_content = html_file.read_text()
+            # Extract existing jobs from the HTML content
+            existing_jobs = [
+                {
+                    "title": line.split("<b>")[1].split("</b>")[0],
+                    "company": line.split("<br>")[1].split(" – ")[0],
+                    "loc": line.split("<br>")[1].split(" – ")[1],
+                    "url": line.split("href='")[1].split("'")[0],
+                }
+                for line in existing_content.split("<div id='job-")[1:]
+            ]
+
+        # Combine existing jobs with new jobs, avoiding duplicates
+        all_jobs = existing_jobs + [job for job in jobs if job not in existing_jobs]
+
+        # Generate HTML content
         html = f"""<!DOCTYPE html><html><head><meta charset='utf-8'><title>{TITLE}</title>
         <style>
             body{{font-family:sans-serif;max-width:700px;margin:auto;padding:20px}}
@@ -68,10 +88,12 @@ def make_html(jobs):
         </script>
         </head><body>
         <h1>🚀 {TITLE}</h1>"""
-        for i, j in enumerate(jobs):
+
+        for i, j in enumerate(all_jobs):
             html += f"<div id='job-{i}' class='job'><a href='{j['url']}' target='_blank'><b>{j['title']}</b></a><br>{j['company']} – {j['loc']}</div>"
+
         html += f"<footer><hr>Updated {datetime.datetime.now().strftime('%d %b %Y')}</footer></body></html>"
-        REPO_PATH.joinpath("index.html").write_text(html)
+        html_file.write_text(html)
         log("📄 HTML updated successfully!", "ok")
     except Exception as e:
         log(f"❌ Failed to write HTML: {e}", "error")
