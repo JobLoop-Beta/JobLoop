@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
 
 # --- CONFIG ---
-API_KEY = os.getenv("RAPIDAPI_KEY") or "841dbe29d5msh790ecbf1042fa50p14de78jsn602f79fdbc8c"
+API_KEY = os.getenv("RAPIDAPI_KEY") or "
 TITLE = "Top Tech Jobs of the Week – India 🇮🇳"
 REPO_PATH = Path(__file__).parent
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -363,7 +363,6 @@ def make_html(jobs):
     except Exception as e:
         log(f"❌ Failed to write HTML: {e}", "error")
         traceback.print_exc()
-
 
 
 # --- LINKEDIN POST ---
