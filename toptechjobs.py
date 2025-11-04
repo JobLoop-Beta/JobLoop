@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
 
 # --- CONFIG ---
-API_KEY = os.getenv("RAPIDAPI_KEY") or ""
+API_KEY = os.getenv("RAPIDAPI_KEY") or "841dbe29d5msh790ecbf1042fa50p14de78jsn602f79fdbc8c"
 TITLE = "Top Tech Jobs of the Week – India 🇮🇳"
 REPO_PATH = Path(__file__).parent
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -364,42 +364,7 @@ def make_html(jobs):
         log(f"❌ Failed to write HTML: {e}", "error")
         traceback.print_exc()
 
-# --- IMAGE GENERATOR ---
-def make_image(jobs):
-    try:
-        W, H = 1080, 1080
-        img = Image.new("RGB", (W, H))
-        draw = ImageDraw.Draw(img)
 
-        for y in range(H):
-            r = int(245 - (y / H) * 60)
-            g = int(245 - (y / H) * 100)
-            b = int(255 - (y / H) * 120)
-            draw.line([(0, y), (W, y)], fill=(r, g, b))
-
-        title_font = ImageFont.truetype(FONT, 70)
-        job_font = ImageFont.truetype(FONT, 40)
-        footer_font = ImageFont.truetype(FONT, 30)
-
-        draw.text((60, 70), "🚀 Top Tech Jobs of the Week", font=title_font, fill=(15, 15, 15))
-        draw.line([(60, 150), (1020, 150)], fill=(50, 50, 50), width=3)
-
-        y = 200
-        for j in jobs[:5]:
-            text = f"💼 {j['title']} @ {j['company']}"
-            draw.text((70, y), text[:55] + ("..." if len(text) > 55 else ""), font=job_font, fill=(20, 20, 20))
-            y += 90
-
-        draw.text((60, 950), "Follow @TopTechJobs for weekly updates 💼", font=footer_font, fill=(40, 40, 40))
-
-        img_path = REPO_PATH / "top_jobs_post.png"
-        img.save(img_path)
-        log(f"🖼️ Generated image saved to {img_path}", "ok")
-        return img_path
-    except Exception as e:
-        log(f"❌ Error generating image: {e}", "error")
-        traceback.print_exc()
-        return None
 
 # --- LINKEDIN POST ---
 def post_single_job(job, index, page):
